@@ -1,8 +1,24 @@
 // global variables
-var plot; 
+
+/**
+ * This global variable is the unique plot returned by jquery-flot
+ **/
+var plot;
+
+/**
+ * global objet to contain the "Cathod Ray Tube"'s data
+ **/
 var cro; 
+
+/**
+ * global boolean switch to enable/disable refreshing cro's screen.
+ **/
 var auto_refresh=true;
 
+/**
+ * Creates the widget supporting CRO display
+ * @param id the identifier of an element which will contain the CRO widget
+ **/
 function init_graph(id){
     var options={
 	lines: {
@@ -35,6 +51,11 @@ function init_graph(id){
     plot = $.plot($('#'+id),[ ],options);    
 }
 
+/**
+ * Main fuction to create the oscilloscope web page.
+ * Creates the display, and the auxiliary buttons, then connects
+ * timer events to refreshers, for displaying the measurements plot.
+ **/
 function scope_page(owner){
     cro = new Object();
     cro.own=owner||$('body');

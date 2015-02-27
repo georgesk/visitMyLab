@@ -58,15 +58,15 @@ function init_graph(id){
  * @param owner a jQueryfied HTML element which will contain the scope
  * @param input Expeye's input channel which will be scoped.
  *  defaults to "A1"
- * @param samples number of measurements (the total duration will be
- *  samples * (number-1) seconds) defaults to 201 !!!not yet supported!!!
+ * @param samples number of measurements : the total duration will be
+ *  samples * (number-1) seconds ; defaults to 201
  * @param delay delay between two consecutive measurements (in second)
- *  defaults to 0.001 (one millisecond) !!!not yet supported!!!
+ *  defaults to 0.0002 (200 microseconds)
  * @param duration total duration of scoped data. Defaults to null.
  *  if set to some float value, its value takes precedence onto delay
  *  and delay will be set to duration/(number - 1). !!!not yet supported!!!
  **/
-function scope_page(owner, input="A1", samples=201, delay="0.001", duration=null){
+function scope_page(owner, input="A1", samples=201, delay="0.0002", duration=null){
     cro = new Object();
     cro.own=owner||$('body');
     owner.empty();
@@ -125,6 +125,7 @@ function scope_page(owner, input="A1", samples=201, delay="0.001", duration=null
 	    data:{
 		input:"A1",
 		samples: samples,
+		delay: delay,
 	    },
 	    dataType: "json",
 	    timeout: 5000,

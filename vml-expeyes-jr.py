@@ -107,8 +107,9 @@ class ExpPage:
                     pass
             
         if 'samples' in kw: samples=int(kw['samples'])
-        if 'delay' in kw: delay=kw['delay']
-        if 'duration' in kw: delay=int(1000000*kw['duration']/(samples-1))
+        if 'delay' in kw: delay=int(float(kw['delay'])*1000000)
+        if 'duration' in kw and kw['duration'] != "null" :
+            delay=int(1000000*float(kw['duration'])/(samples-1))
 
         self.mtype = 't,v' # two arrays, first for time, second for voltage
         if self.hw_lock:

@@ -123,7 +123,7 @@ function scope_page(owner, input="A1", samples=201, delay="0.0002", duration=nul
             type: "GET",
             url: '/oneScopeChannel',
 	    data:{
-		input:"A1",
+		input: input,
 		samples: samples,
 		delay: delay,
 		duration: duration,

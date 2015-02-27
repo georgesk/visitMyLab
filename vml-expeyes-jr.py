@@ -83,7 +83,6 @@ class ExpPage:
         delay, which is 200 microseconds by default.
         @return measurement values
         """
-        print ("GRRRR", kw)
         # default values
         inp = 1
         samples = 201
@@ -109,19 +108,15 @@ class ExpPage:
         if 'samples' in kw: samples=int(kw['samples'])
         if 'delay' in kw: delay=int(float(kw['delay'])*1000000)
         if 'duration' in kw and kw['duration'] != "null" :
-            print("GRRR duration=", kw['duration'])
             delay=int(1000000*float(kw['duration'])/(samples-1))
-            print("GRRR delay=", delay)
 
         self.mtype = 't,v' # two arrays, first for time, second for voltage
         if self.hw_lock:
             return json.dumps(self.oldMeasurements)
         self.hw_lock=True
         self.oldMeasurements=self.measurements # backups old data
-        #print ("GRRR self.device.capture(inp, samples, delay) =", "self.device.capture(%s, %s, %s)" %(inp, samples, delay) )
         self.measurements = self.device.capture(inp, samples, delay)
         self.hw_lock=False
-        #print ("GRRR self.measurements = %s" %(self.measurements,))
         return json.dumps(self.measurements)
 
     @cherrypy.expose

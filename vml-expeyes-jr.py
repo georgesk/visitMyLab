@@ -38,18 +38,16 @@ class ExpPage:
             self.device.fd.close()
         self.device = expeyes.eyesj.open()
         return
-
+    
+    @cherrypy.expose
     def index(self):
 	"""
         features the home page
         @return an HTML file with all necessary JS libraries included,
         """
-        with open("templates/index-vml.html","r") as webpage:
-            return webpage.read()
+        return file("templates/index-vml.html")
 
-    index.exposed = True
-
-
+    @cherrypy.expose
     def reconnect(self):
         """
         Connects to the hardware again. Does nothing when self.active
@@ -65,14 +63,17 @@ class ExpPage:
         self.__init__()
         self.hw_lock=False
         return True
-    reconnect.exposed=True
 
+    @cherrypy.expose
+#    @cherrypy.tools.json_out()
     def oneScopeChannel(self, **kw):
         """
         This method launches a series of measurements made at one analog
         input and returns their values.
         @param kw dictionary of keywords. Allowed keywords are:
-        - input:    integer, selects an analog input; defaults to 1 (channel A1)
+        - input:    integer or string, selects an analog input;
+          defaults to 1 (channel A1). If it is a string like "A1", "A2", etc.
+          then the string will be converted to a relevant value.
         - samples:  integer, number of samples; defaults to 201 (200 intervals)
         - delay:    integer, delay in microsecond between two samples;
           defaults to 200 (200 * 200 microseconds= 40 ms)
@@ -82,12 +83,25 @@ class ExpPage:
         delay, which is 200 microseconds by default.
         @return measurement values
         """
+        print ("GRRRR", kw)
         # default values
         inp = 1
         samples = 201
         delay = 200
-        
-        if 'input' in kw: inp=kw['input']
+
+        expeyes_inputs={
+            "A1":1,
+            "A2":2,
+            }
+
+        if 'input' in kw: # sets the input according to parameters
+            input=kw['input']
+            if type(input)==type(0):
+                inp=input
+            if input in expeyes_inputs:
+                input=expeyes_inputs[input]
+                inp=input
+            
         if 'samples' in kw: samples=kw['samples']
         if 'delay' in kw: delay=kw['delay']
         if 'duration' in kw: delay=int(1000000*kw['duration']/(samples-1))
@@ -97,11 +111,13 @@ class ExpPage:
             return json.dumps(self.oldMeasurements)
         self.hw_lock=True
         self.oldMeasurements=self.measurements # backups old data
+        #print ("GRRR self.device.capture(inp, samples, delay) =", "self.device.capture(%s, %s, %s)" %(inp, samples, delay) )
         self.measurements = self.device.capture(inp, samples, delay)
         self.hw_lock=False
+        #print ("GRRR self.measurements = %s" %(self.measurements,))
         return json.dumps(self.measurements)
-    oneScopeChannel.exposed=True
 
+    @cherrypy.expose
     def getValues(self, **kw):
         """
         a routine to get measured values as a useful file
@@ -135,8 +151,6 @@ class ExpPage:
                 return "mode = '%s', measurement type '%s' not supported." %(mode, self.mtype)
         return "non-supported mode %s" %mode
     
-    getValues.exposed=True
-
 		
 def stopit():
     """

@@ -55,8 +55,18 @@ function init_graph(id){
  * Main fuction to create the oscilloscope web page.
  * Creates the display, and the auxiliary buttons, then connects
  * timer events to refreshers, for displaying the measurements plot.
+ * @param owner a jQueryfied HTML element which will contain the scope
+ * @param input Expeye's input channel which will be scoped.
+ *  defaults to "A1" !!!not yet supported!!!
+ * @param delay delay between two consecutive measurements (in second)
+ *  defaults to 0.001 (one millisecond) !!!not yet supported!!!
+ * @param number number of measurements (the total duration will be
+ *  delay * (number-1) seconds) defaults to 501 !!!not yet supported!!!
+ * @param duration total duration of scoped data. Defaults to null.
+ *  if set to some float value, its value takes precedence onto delay
+ *  and delay will be set to duration/(number - 1). !!!not yet supported!!!
  **/
-function scope_page(owner){
+function scope_page(owner, input="A1", delay="0.001", number=501, duration=null){
     cro = new Object();
     cro.own=owner||$('body');
     owner.empty();
@@ -112,16 +122,19 @@ function scope_page(owner){
     	    cache:false,
             type: "GET",
             url: '/oneScopeChannel',
+	    data:{
+		input:"A1",
+	    },
 	    dataType: "json",
 	    timeout: 5000,
  	    async: true,
-            success: function(data){
+            success: function(gotdata){
 		res=new Array();
 		theData=new Array();
-		while(data.length){
+		while(gotdata.length){
 		    dataset=new Array();
-		    y=data.pop();
-		    x=data.pop();
+		    y=gotdata.pop();
+		    x=gotdata.pop();
 		    for(i=0;i<x.length;i++){
 			dataset.push([x[i],y[i]]);
 		    }

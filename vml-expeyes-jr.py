@@ -96,13 +96,17 @@ class ExpPage:
 
         if 'input' in kw: # sets the input according to parameters
             input=kw['input']
-            if type(input)==type(0):
-                inp=input
             if input in expeyes_inputs:
                 input=expeyes_inputs[input]
                 inp=input
+            else:
+                try :
+                    input=int(input)
+                    inp=input
+                except:
+                    pass
             
-        if 'samples' in kw: samples=kw['samples']
+        if 'samples' in kw: samples=int(kw['samples'])
         if 'delay' in kw: delay=kw['delay']
         if 'duration' in kw: delay=int(1000000*kw['duration']/(samples-1))
 

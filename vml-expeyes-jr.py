@@ -109,7 +109,9 @@ class ExpPage:
         if 'samples' in kw: samples=int(kw['samples'])
         if 'delay' in kw: delay=int(float(kw['delay'])*1000000)
         if 'duration' in kw and kw['duration'] != "null" :
+            print("GRRR duration=", kw['duration'])
             delay=int(1000000*float(kw['duration'])/(samples-1))
+            print("GRRR delay=", delay)
 
         self.mtype = 't,v' # two arrays, first for time, second for voltage
         if self.hw_lock:

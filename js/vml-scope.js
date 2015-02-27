@@ -64,7 +64,7 @@ function init_graph(id){
  *  defaults to 0.0002 (200 microseconds)
  * @param duration total duration of scoped data. Defaults to null.
  *  if set to some float value, its value takes precedence onto delay
- *  and delay will be set to duration/(number - 1). !!!not yet supported!!!
+ *  and delay will be set to duration/(number - 1).
  **/
 function scope_page(owner, input="A1", samples=201, delay="0.0002", duration=null){
     cro = new Object();
@@ -126,6 +126,7 @@ function scope_page(owner, input="A1", samples=201, delay="0.0002", duration=nul
 		input:"A1",
 		samples: samples,
 		delay: delay,
+		duration: duration,
 	    },
 	    dataType: "json",
 	    timeout: 5000,

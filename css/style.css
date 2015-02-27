@@ -16,17 +16,29 @@ body {
     border:1px solid red;
 }
 
+#disp{
+    position: absolute;
+    height: 100%;
+    font-size: 22pt;
+    left: 0px;
+    right: 8.2em;
+    bottom: 0px;
+}
+#buttons{
+    position: absolute;
+    width: 8em;
+    height:100%;
+    right:0px;
+    bottom:0px;
+}
 .pauseButton {
     z-index:10;
     color:green;
     font-size:22pt;
     opacity:0.6;
-    position:absolute;
-    width:30%;
-    height:18%;
+    height:2em;
+    width:100%;
     border-radius:30px;
-    right:0px;
-    bottom:0px;
 }
 
 .saveButton {
@@ -34,21 +46,17 @@ body {
     color:green;
     font-size:22pt;
     opacity:0.6;
-    position:absolute;
-    width:30%;
-    height:18%;
+    height:2em;
+    width: 100%;
     border-radius:30px;
-    right:0px;
-    bottom:19%;
 }
 
 .croContainer{
     z-index:20;
-    position:absolute;
     background:white; /* outer background of the scope */
     overflow:hidden;
-    width:70%;
-    height:100%;
+    width: 100%;
+    height: 100%;
     border-radius:2%;
 }
 

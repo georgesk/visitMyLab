@@ -68,15 +68,19 @@ function init_graph(id){
  **/
 function scope_page(owner, input="A1", samples=201, delay="0.0002", duration=null){
     cro = new Object();
-    cro.own=owner||$('body');
-    owner.empty();
+    top_owner=owner||$('body');
+    top_owner.empty();
+    var dispDiv=$("<div>",{id:"disp"});
+    var buttonsDiv=$("<div>",{id:"buttons"});
+    top_owner.append(dispDiv);
+    top_owner.append(buttonsDiv);
     cro.timer = null;
     cro.refresh_delay=100;
 
     //Pause unpause button
     cro.pause=add({
 	what:'button',
-	owner:cro.own,
+	owner:buttonsDiv,
 	txt:'Play/Pause',
 	classes:'pauseButton',
     });
@@ -93,7 +97,7 @@ function scope_page(owner, input="A1", samples=201, delay="0.0002", duration=nul
     //Save button
     cro.save=add({
 	what:'button',
-	owner:cro.own,
+	owner:buttonsDiv,
 	txt:'Save',
 	classes:'saveButton',
     });
@@ -104,7 +108,7 @@ function scope_page(owner, input="A1", samples=201, delay="0.0002", duration=nul
     //--initialize graph
     cro.container = add({
 	what:'div',
-	owner:cro.own,
+	owner:dispDiv,
 	txt:'',
 	classes:'croContainer',
     });	//make a container

@@ -19,7 +19,6 @@ body {
 #disp{
     position: absolute;
     height: 100%;
-    font-size: 22pt;
     left: 0px;
     right: 8.2em;
     bottom: 0px;
@@ -32,9 +31,9 @@ body {
     bottom:0px;
 }
 .pauseButton {
+    font-size: 22pt;
     z-index:10;
     color:green;
-    font-size:22pt;
     opacity:0.6;
     height:2em;
     width:100%;
@@ -42,9 +41,9 @@ body {
 }
 
 .saveButton {
+    font-size: 22pt;
     z-index:10;
     color:green;
-    font-size:22pt;
     opacity:0.6;
     height:2em;
     width: 100%;

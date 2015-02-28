@@ -27,6 +27,7 @@ class ExpPage:
         # backup data are served if too much requests are coming simultaneously
         self.mtype=''          # typeof data describing the measurements
         self.connect()         # initializes the driver
+        self.first_config="true" # scope is not yet configured for samples, etc.
         return
 		
     def connect(self):
@@ -70,7 +71,9 @@ class ExpPage:
         """
         This method launches a series of measurements made at one analog
         input and returns their values.
-        @param kw dictionary of keywords. Allowed keywords are:
+        @param kw json encoded dictionary of keywords. Allowed keywords are:
+        - config:   boolean; when it is True or when the scope had never
+          been configured, the other parameters are taken in account
         - input:    integer or string, selects an analog input;
           defaults to 1 (channel A1). If it is a string like "A1", "A2", etc.
           then the string will be converted to a relevant value.
@@ -83,39 +86,61 @@ class ExpPage:
         delay, which is 200 microseconds by default.
         @return measurement values
         """
+        kw=json.loads(kw["options"])
+        print("GRRR kw=", kw)
         # default values
-        inp = 1
-        samples = 201
-        delay = 200
-
         expeyes_inputs={
             "A1":1,
             "A2":2,
             }
 
-        if 'input' in kw: # sets the input according to parameters
-            input=kw['input']
-            if input in expeyes_inputs:
-                input=expeyes_inputs[input]
-                inp=input
-            else:
-                try :
-                    input=int(input)
-                    inp=input
+        if ("config"in kw and kw["config"]) or self.first_config:
+            if self.first_config:
+                print ("GRRR first configuration")
+                self.first_config=False
+                self.inp = 1
+                self.samples = 201
+                self.delay = 200
+
+            if 'input' in kw: # sets the input according to parameters
+                input=kw['input']
+                if input in expeyes_inputs:
+                    input=expeyes_inputs[input]
+                    self.inp=input
+                    print ("GRRR self.inp set to", self.inp)
+                else:
+                    try :
+                        input=int(input)
+                        self.inp=input
+                        print ("GRRR self.inp set to", self.inp)
+                    except:
+                        pass
+
+            if 'samples' in kw:
+                try:
+                    self.samples=kw['samples']
+                    print ("GRRRR self.samples set to", self.samples)
                 except:
                     pass
-            
-        if 'samples' in kw: samples=int(kw['samples'])
-        if 'delay' in kw: delay=int(float(kw['delay'])*1000000)
-        if 'duration' in kw and kw['duration'] != "null" :
-            delay=int(1000000*float(kw['duration'])/(samples-1))
+            if 'delay' in kw:
+                try:
+                    self.delay=int(kw['delay']*1000000)
+                    print ("GRRRR self.delay set to", self.delay)
+                except:
+                    pass
+            if 'duration' in kw and kw['duration']:
+                try:
+                    self.delay=int(1000000*kw['duration']/(self.samples-1))
+                    print ("GRRRR self.delay set to", self.delay, "due to duration parameter")
+                except:
+                    pass
 
         self.mtype = 't,v' # two arrays, first for time, second for voltage
         if self.hw_lock:
             return json.dumps(self.oldMeasurements)
         self.hw_lock=True
         self.oldMeasurements=self.measurements # backups old data
-        self.measurements = self.device.capture(inp, samples, delay)
+        self.measurements = self.device.capture(self.inp, self.samples, self.delay)
         self.hw_lock=False
         return json.dumps(self.measurements)
 

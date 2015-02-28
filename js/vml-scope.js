@@ -56,6 +56,7 @@ function init_graph(id){
  * Creates the display, and the auxiliary buttons, then connects
  * timer events to refreshers, for displaying the measurements plot.
  * @param owner a jQueryfied HTML element which will contain the scope
+ * @param config boolean; must be true to take in account next parameters
  * @param input Expeye's input channel which will be scoped.
  *  defaults to "A1"
  * @param samples number of measurements : the total duration will be
@@ -66,7 +67,13 @@ function init_graph(id){
  *  if set to some float value, its value takes precedence onto delay
  *  and delay will be set to duration/(number - 1).
  **/
-function scope_page(owner, input="A1", samples=201, delay="0.0002", duration=null){
+function scope_page(owner, options={}){
+    opts={};
+    opts.config   = options.config   || false;
+    opts.input    = options.input    || "A1";
+    opts.samples  = options.samples  || 201;
+    opts.delay    = options.delay    || 0.0002;
+    opts.duration = options.duration || null;
     cro = new Object();
     top_owner=owner||$('body');
     top_owner.empty();
@@ -82,7 +89,7 @@ function scope_page(owner, input="A1", samples=201, delay="0.0002", duration=nul
 	what:'button',
 	owner:buttonsDiv,
 	txt:'Play/Pause',
-	classes:'pauseButton',
+	classes:'activeButton wideButton',
     });
     cro.pause.click(function(){
 	if(auto_refresh==true){
@@ -99,11 +106,38 @@ function scope_page(owner, input="A1", samples=201, delay="0.0002", duration=nul
 	what:'button',
 	owner:buttonsDiv,
 	txt:'Save',
-	classes:'saveButton',
+	classes:'activeButton wideButton',
     });
     cro.save.click(function(){
 	var w = open("/getValues")
     });
+
+    //sample Buttons
+    cro.sample=add({
+	what: 'button',
+	owner: buttonsDiv,
+	txt: 'samples',
+	classes: 'noButton',
+    });
+    cro.sample_array=[11,21,51,101,201,501,1001];
+    // sample- button
+    cro.sampleMinus=add({
+	what: 'button',
+	owner: buttonsDiv,
+	txt: '-',
+	classes: 'activeButton',
+    });
+    cro.sampleMinus.click(function(){
+	//!!!!
+    });
+    // sample+ button
+    cro.samplePlus=add({
+	what: 'button',
+	owner: buttonsDiv,
+	txt: '+',
+	classes: 'activeButton',
+    });
+    
 	
     //--initialize graph
     cro.container = add({
@@ -127,10 +161,7 @@ function scope_page(owner, input="A1", samples=201, delay="0.0002", duration=nul
             type: "GET",
             url: '/oneScopeChannel',
 	    data:{
-		input: input,
-		samples: samples,
-		delay: delay,
-		duration: duration,
+		options: JSON.stringify(opts),
 	    },
 	    dataType: "json",
 	    timeout: 5000,

@@ -151,9 +151,11 @@ class ExpPage:
     @cherrypy.expose
     def sampleMinus(self, **kw):
         """
-        chooses a lower value for self.samples if possible
+        chooses a lower value for self.samples if possible,
+        while keeping the same total duration
         @param kw a dummy dictionary to catch the session param
         """
+        oldSamples=self.samples
         if self.samples in ExpPage.sampleArray:
             i=ExpPage.sampleArray.index(self.samples);
             if i > 0:
@@ -163,6 +165,8 @@ class ExpPage:
             while i < len(ExpPage.sampleArray)-2 and self.samples > ExpPage.sampleArray[i+1]:
                 i+=1
             self.samples=ExpPage.sampleArray[i]
+        if oldSamples != self.samples:
+            self.delay=int(self.delay*(oldSamples-1)/(self.samples-1))
         return
         
     @cherrypy.expose
@@ -180,6 +184,8 @@ class ExpPage:
             while i > 0 and self.samples < ExpPage.sampleArray[i-1]:
                 i-=1
             self.samples=ExpPage.sampleArray[i]
+        if oldSamples != self.samples:
+            self.delay=int(self.delay*(oldSamples-1)/(self.samples-1))
         return
         
     @cherrypy.expose

@@ -102,7 +102,8 @@ class ExpPage:
                 self.samples = 201
                 self.delay = 200
 
-            if 'input' in kw: # sets the input according to parameters
+            if 'input' in kw and kw['input']:
+                # sets the input according to parameters
                 input=kw['input']
                 if input in expeyes_inputs:
                     input=expeyes_inputs[input]
@@ -116,13 +117,13 @@ class ExpPage:
                     except:
                         pass
 
-            if 'samples' in kw:
+            if 'samples' in kw and kw['samples']:
                 try:
                     self.samples=kw['samples']
                     print ("GRRRR self.samples set to", self.samples)
                 except:
                     pass
-            if 'delay' in kw:
+            if 'delay' in kw and kw['delay']:
                 try:
                     self.delay=int(kw['delay']*1000000)
                     print ("GRRRR self.delay set to", self.delay)
@@ -140,10 +141,47 @@ class ExpPage:
             return json.dumps(self.oldMeasurements)
         self.hw_lock=True
         self.oldMeasurements=self.measurements # backups old data
+        print ("GRRR self.device.capture(self.inp, self.samples, self.delay)= self.device.capture(%s, %s, %s)" %(self.inp, self.samples, self.delay))
         self.measurements = self.device.capture(self.inp, self.samples, self.delay)
         self.hw_lock=False
         return json.dumps(self.measurements)
 
+    sampleArray=[11,21,51,101,201,501,1001]
+    
+    @cherrypy.expose
+    def sampleMinus(self, **kw):
+        """
+        chooses a lower value for self.samples if possible
+        @param kw a dummy dictionary to catch the session param
+        """
+        if self.samples in ExpPage.sampleArray:
+            i=ExpPage.sampleArray.index(self.samples);
+            if i > 0:
+                self.samples=ExpPage.sampleArray[i-1]
+        else:
+            i=0;
+            while i < len(ExpPage.sampleArray)-2 and self.samples > ExpPage.sampleArray[i+1]:
+                i+=1
+            self.samples=ExpPage.sampleArray[i]
+        return
+        
+    @cherrypy.expose
+    def samplePlus(self, **kw):
+        """
+        chooses a higher value for self.samples if possible
+        @param kw a dummy dictionary to catch the session param
+        """
+        if self.samples in ExpPage.sampleArray:
+            i=ExpPage.sampleArray.index(self.samples);
+            if i < len(ExpPage.sampleArray)-1:
+                self.samples=ExpPage.sampleArray[i+1]
+        else:
+            i=len(ExpPage.sampleArray)-1;
+            while i > 0 and self.samples < ExpPage.sampleArray[i-1]:
+                i-=1
+            self.samples=ExpPage.sampleArray[i]
+        return
+        
     @cherrypy.expose
     def getValues(self, **kw):
         """

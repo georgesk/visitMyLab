@@ -70,10 +70,10 @@ function init_graph(id){
 function scope_page(owner, options={}){
     opts={};
     opts.config   = options.config   || false;
-    opts.input    = options.input    || "A1";
-    opts.samples  = options.samples  || 201;
-    opts.delay    = options.delay    || 0.0002;
-    opts.duration = options.duration || null;
+    opts.input    = options.input    || false; //"A1";
+    opts.samples  = options.samples  || false; //201;
+    opts.delay    = options.delay    || false; //0.0002;
+    opts.duration = options.duration || false;
     cro = new Object();
     top_owner=owner||$('body');
     top_owner.empty();
@@ -109,7 +109,7 @@ function scope_page(owner, options={}){
 	classes:'activeButton wideButton',
     });
     cro.save.click(function(){
-	var w = open("/getValues")
+	var w = open("/getValues");
     });
 
     //sample Buttons
@@ -119,7 +119,6 @@ function scope_page(owner, options={}){
 	txt: 'samples',
 	classes: 'noButton',
     });
-    cro.sample_array=[11,21,51,101,201,501,1001];
     // sample- button
     cro.sampleMinus=add({
 	what: 'button',
@@ -128,7 +127,13 @@ function scope_page(owner, options={}){
 	classes: 'activeButton',
     });
     cro.sampleMinus.click(function(){
-	//!!!!
+	$.ajax({
+	    cache: false,
+	    type: "GET",
+	    url: "/sampleMinus",
+	    timeout: 5000,
+	    async: true,
+	});
     });
     // sample+ button
     cro.samplePlus=add({
@@ -136,6 +141,15 @@ function scope_page(owner, options={}){
 	owner: buttonsDiv,
 	txt: '+',
 	classes: 'activeButton',
+    });
+    cro.samplePlus.click(function(){
+	$.ajax({
+	    cache: false,
+	    type: "GET",
+	    url: "/samplePlus",
+	    timeout: 5000,
+	    async: true,
+	});
     });
     
 	

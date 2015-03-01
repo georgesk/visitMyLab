@@ -87,7 +87,6 @@ class ExpPage:
         @return measurement values
         """
         kw=json.loads(kw["options"])
-        print("GRRR kw=", kw)
         # default values
         expeyes_inputs={
             "A1":1,
@@ -96,7 +95,6 @@ class ExpPage:
 
         if ("config"in kw and kw["config"]) or self.first_config:
             if self.first_config:
-                print ("GRRR first configuration")
                 self.first_config=False
                 self.inp = 1
                 self.samples = 201
@@ -108,31 +106,26 @@ class ExpPage:
                 if input in expeyes_inputs:
                     input=expeyes_inputs[input]
                     self.inp=input
-                    print ("GRRR self.inp set to", self.inp)
                 else:
                     try :
                         input=int(input)
                         self.inp=input
-                        print ("GRRR self.inp set to", self.inp)
                     except:
                         pass
 
             if 'samples' in kw and kw['samples']:
                 try:
                     self.samples=kw['samples']
-                    print ("GRRRR self.samples set to", self.samples)
                 except:
                     pass
             if 'delay' in kw and kw['delay']:
                 try:
                     self.delay=int(kw['delay']*1000000)
-                    print ("GRRRR self.delay set to", self.delay)
                 except:
                     pass
             if 'duration' in kw and kw['duration']:
                 try:
                     self.delay=int(1000000*kw['duration']/(self.samples-1))
-                    print ("GRRRR self.delay set to", self.delay, "due to duration parameter")
                 except:
                     pass
 
@@ -141,7 +134,6 @@ class ExpPage:
             return json.dumps(self.oldMeasurements)
         self.hw_lock=True
         self.oldMeasurements=self.measurements # backups old data
-        print ("GRRR self.device.capture(self.inp, self.samples, self.delay)= self.device.capture(%s, %s, %s)" %(self.inp, self.samples, self.delay))
         self.measurements = self.device.capture(self.inp, self.samples, self.delay)
         self.hw_lock=False
         return json.dumps(self.measurements)
@@ -214,6 +206,27 @@ class ExpPage:
             delay=duration/(samples-1)
             # as duration >= 100 and samples can be as low as 11,
             # delay will be at least 10, so this iteration will end.
+        if duration !=oldDuration:
+            self.delay=delay
+            self.samples=samples
+        return
+    
+    @cherrypy.expose
+    def durationPlus(self, **kw):
+        """
+        increases the duration of the record when possible; modifies the
+        values of self.samples and self.delay; self.samples remains inside
+        the set ExpPage.sampleArray; self.delay cannot be less than 10
+        microseconds
+        """
+        oldDuration=self.delay*(self.samples - 1)
+        duration=oldDuration
+        samples=self.samples
+        for d in ExpPage.durationArray:
+            if d > duration:
+                duration=d
+                break
+        delay=duration/(samples-1)
         if duration !=oldDuration:
             self.delay=delay
             self.samples=samples

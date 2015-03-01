@@ -152,7 +152,46 @@ function scope_page(owner, options={}){
 	});
     });
     
-	
+    // duration buttons
+    cro.duration=add({
+	what: 'button',
+	owner: buttonsDiv,
+	txt: 'duration',
+	classes: 'noButton',
+    });
+    // duation- button
+    cro.durationMinus=add({
+	what: 'button',
+	owner: buttonsDiv,
+	txt: '-',
+	classes: 'activeButton',
+    });
+    cro.durationMinus.click(function(){
+	$.ajax({
+	    cache: false,
+	    type: "GET",
+	    url: "/durationMinus",
+	    timeout: 5000,
+	    async: true,
+	});
+    });
+    // duration+ button
+    cro.durationPlus=add({
+	what: 'button',
+	owner: buttonsDiv,
+	txt: '+',
+	classes: 'activeButton',
+    });
+    cro.durationPlus.click(function(){
+	$.ajax({
+	    cache: false,
+	    type: "GET",
+	    url: "/durationPlus",
+	    timeout: 5000,
+	    async: true,
+	});
+    });
+    
     //--initialize graph
     cro.container = add({
 	what:'div',

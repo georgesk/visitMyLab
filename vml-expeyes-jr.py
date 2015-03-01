@@ -188,7 +188,37 @@ class ExpPage:
         if oldSamples != self.samples:
             self.delay=int(self.delay*(oldSamples-1)/(self.samples-1))
         return
-        
+
+    durationArray=[100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000,200000, 500000]
+    @cherrypy.expose
+    def durationMinus(self, **kw):
+        """
+        reduces the duration of the record when possible; modifies the
+        values of self.samples and self.delay; self.samples remains inside
+        the set ExpPage.sampleArray; self.delay cannot be less than 10
+        microseconds
+        """
+        oldDuration=self.delay*(self.samples - 1)
+        duration=oldDuration
+        samples=self.samples
+        for d in ExpPage.durationArray[::-1]:
+            if d < duration:
+                duration=d
+                break
+        delay=duration/(samples-1)
+        while delay < 10: # delay cannot be less than 10 microseconds
+            for s in ExpPage.sampleArray[::1]:
+                if s < samples:
+                    samples=s
+                    break
+            delay=duration/(samples-1)
+            # as duration >= 100 and samples can be as low as 11,
+            # delay will be at least 10, so this iteration will end.
+        if duration !=oldDuration:
+            self.delay=delay
+            self.samples=samples
+        return
+    
     @cherrypy.expose
     def getValues(self, **kw):
         """

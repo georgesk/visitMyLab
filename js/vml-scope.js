@@ -90,6 +90,7 @@ function scope_page(owner, options={}){
 	owner:buttonsDiv,
 	txt:'Play/Pause',
 	classes:'activeButton wideButton',
+	title:'Click to pause or to start refreshing the display',
     });
     cro.pause.click(function(){
 	if(auto_refresh==true){
@@ -118,6 +119,7 @@ function scope_page(owner, options={}){
 	owner:$("#saveButtonsDiv"),
 	txt:'txt',
 	classes:'activeButton',
+	title:'Save a data series in ASCII text format',
     });
     cro.saveTxt.click(function(){
 	var w = open("/getValues?mode=ascii");
@@ -127,6 +129,7 @@ function scope_page(owner, options={}){
 	owner:$("#saveButtonsDiv"),
 	txt:'ods',
 	classes:'activeButton',
+	title:'Save a data series in OpenDocument format (Calc spreadsheet)',
     });
     cro.saveOds.click(function(){
 	var w = open("/getValues?mode=ods");
@@ -145,6 +148,7 @@ function scope_page(owner, options={}){
 	owner: buttonsDiv,
 	txt: '-',
 	classes: 'activeButton',
+	title: 'Take less measurement samples at each scan',
     });
     cro.sampleMinus.click(function(){
 	$.ajax({
@@ -161,6 +165,7 @@ function scope_page(owner, options={}){
 	owner: buttonsDiv,
 	txt: '+',
 	classes: 'activeButton',
+	title: 'Take more measurement samples at each scan',
     });
     cro.samplePlus.click(function(){
 	$.ajax({
@@ -179,12 +184,13 @@ function scope_page(owner, options={}){
 	txt: 'duration',
 	classes: 'noButton',
     });
-    // duation- button
+    // duration- button
     cro.durationMinus=add({
 	what: 'button',
 	owner: buttonsDiv,
 	txt: '-',
 	classes: 'activeButton',
+	title: 'Decrease the duration of the scan',
     });
     cro.durationMinus.click(function(){
 	$.ajax({
@@ -201,6 +207,7 @@ function scope_page(owner, options={}){
 	owner: buttonsDiv,
 	txt: '+',
 	classes: 'activeButton',
+	title: 'Increase the duration of the scan',
     });
     cro.durationPlus.click(function(){
 	$.ajax({

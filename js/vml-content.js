@@ -35,12 +35,14 @@ function add(opt)
     fn=opt.onclick||'';
     role=opt.role||'child';
     classes=opt.classes||'';
+    title=opt.title||'';
     
     item.id = id;
     item.onclick=fn;
     item.innerHTML = txt;
     owner.append(item);
     result.addClass(classes);
+    if (title) item.setAttribute('title', title)
     return result;
 };
 

@@ -48,7 +48,7 @@ body {
 .noButton {
     font-size: 22pt;
     z-index:10;
-    color:green;
+    color:black;
     opacity:0.6;
     height:2em;
     border-radius:30px;

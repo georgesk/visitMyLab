@@ -296,7 +296,7 @@ class ExpPage:
                 doc.automaticstyles.addElement(widthwide)
 
                 # Start the table, and describe the columns
-                table = Table(name="Password")
+                table = Table(name="Expeyes-Jr measurements")
                 table.addElement(TableColumn(numbercolumnsrepeated=4,stylename=widthshort))
                 table.addElement(TableColumn(numbercolumnsrepeated=3,stylename=widthwide))
 

@@ -101,15 +101,35 @@ function scope_page(owner, options={}){
 	}
     });
 	
-    //Save button
+    //Save buttons
+    cro.saveButtonsDiv=add({
+	what:'div',
+	owner:buttonsDiv,
+	id:'saveButtonsDiv',
+    });
     cro.save=add({
 	what:'button',
-	owner:buttonsDiv,
+	owner:$("#saveButtonsDiv"),
 	txt:'Save',
-	classes:'activeButton wideButton',
+	classes:'noButton',
     });
-    cro.save.click(function(){
-	var w = open("/getValues");
+    cro.saveTxt=add({
+	what:'button',
+	owner:$("#saveButtonsDiv"),
+	txt:'txt',
+	classes:'activeButton',
+    });
+    cro.saveTxt.click(function(){
+	var w = open("/getValues?mode=ascii");
+    });
+    cro.saveOds=add({
+	what:'button',
+	owner:$("#saveButtonsDiv"),
+	txt:'ods',
+	classes:'activeButton',
+    });
+    cro.saveOds.click(function(){
+	var w = open("/getValues?mode=ods");
     });
 
     //sample Buttons

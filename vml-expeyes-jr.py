@@ -10,6 +10,14 @@ import cherrypy, json
 import expeyes.eyesj
 import os.path
 
+## to save ODS files
+from odf.opendocument import OpenDocumentSpreadsheet
+from odf.style import Style, TextProperties, ParagraphProperties
+from odf.style import TableColumnProperties
+from odf.text import P
+from odf.table import Table, TableColumn, TableRow, TableCell
+import io
+
 class ExpPage:
     """
     @class ExpPage HANDLE ALL WEB PAGE REQUESTS
@@ -65,6 +73,11 @@ class ExpPage:
         self.hw_lock=False
         return True
 
+    expeyes_inputs={
+        "A1":1,
+        "A2":2,
+    }
+
     @cherrypy.expose
 #    @cherrypy.tools.json_out()
     def oneScopeChannel(self, **kw):
@@ -88,11 +101,6 @@ class ExpPage:
         """
         kw=json.loads(kw["options"])
         # default values
-        expeyes_inputs={
-            "A1":1,
-            "A2":2,
-            }
-
         if ("config"in kw and kw["config"]) or self.first_config:
             if self.first_config:
                 self.first_config=False
@@ -103,8 +111,8 @@ class ExpPage:
             if 'input' in kw and kw['input']:
                 # sets the input according to parameters
                 input=kw['input']
-                if input in expeyes_inputs:
-                    input=expeyes_inputs[input]
+                if input in ExpPage.expeyes_inputs:
+                    input=ExpPage.expeyes_inputs[input]
                     self.inp=input
                 else:
                     try :
@@ -244,24 +252,90 @@ class ExpPage:
         Other supported modes are not yet implemented
         @return a stream with the relevant MIMEtype.
         """
+        filename="values-{0}".format(time.strftime("%Y-%m-%d_%H_%M_%S"))
         if 'mode' in kw:
             mode=kw['mode']
         else:
-            mode='ascii'
+            #mode='ascii'
+            mode='ods'
         if mode=="ascii":
             ## define response headers
             cherrypy.response.headers["Content-Type"]="text/ascii;charset=utf-8"
-            ## this one needs a fix !!!
-            filename="values-{0}.txt".format(time.strftime("%Y-%m-%d_%H:%M:%S"))
-            print("The file name should be:",filename)
-            cherrypy.response.headers["File-Name"]=filename
-            
+            cherrypy.response.headers['Content-Disposition'] = 'attachment; filename={}.txt'.format(filename)
+            ## send the data
             if self.mtype=='t,v':
                 result=""
                 t,v = self.measurements
                 for i in range(len(t)):
                     result+="{0:f} {1:f}\n".format(t[i], v[i])
                 return result
+            else:
+                return "mode = '%s', measurement type '%s' not supported." %(mode, self.mtype)
+        elif mode=="ods":
+            ## define response headers
+            cherrypy.response.headers["Content-Type"]="application/vnd.oasis.opendocument.spreadsheet"
+            cherrypy.response.headers['Content-Disposition'] = 'attachment; filename={}.ods'.format(filename)
+            ## send the data
+            if self.mtype=='t,v':
+                doc = OpenDocumentSpreadsheet()
+                # Create a style for the table content. One we can modify
+                # later in the word processor.
+                tablecontents = Style(name="Table Contents", family="paragraph")
+                tablecontents.addElement(ParagraphProperties(numberlines="false", linenumber="0"))
+                doc.styles.addElement(tablecontents)
+
+                # Create automatic styles for the column widths.
+                # We want two different widths, one in inches, the other one in metric.
+                # ODF Standard section 15.9.1
+                widthshort = Style(name="Wshort", family="table-column")
+                widthshort.addElement(TableColumnProperties(columnwidth="1.7cm"))
+                doc.automaticstyles.addElement(widthshort)
+
+                widthwide = Style(name="Wwide", family="table-column")
+                widthwide.addElement(TableColumnProperties(columnwidth="1.5in"))
+                doc.automaticstyles.addElement(widthwide)
+
+                # Start the table, and describe the columns
+                table = Table(name="Password")
+                table.addElement(TableColumn(numbercolumnsrepeated=4,stylename=widthshort))
+                table.addElement(TableColumn(numbercolumnsrepeated=3,stylename=widthwide))
+
+                t,v=self.measurements
+                ## column titles
+                tr = TableRow()
+                table.addElement(tr)
+                tc = TableCell()
+                tr.addElement(tc)
+                p = P(stylename=tablecontents,text='t (ms)')
+                tc.addElement(p)
+
+                tc = TableCell()
+                tr.addElement(tc)
+                input=self.inp
+                for name in ExpPage.expeyes_inputs:
+                    if ExpPage.expeyes_inputs[name]== self.inp:
+                        input=name
+                        break
+                p = P(stylename=tablecontents,text=input+' (V)')
+                tc.addElement(p)
+
+                for i in range(len(t)):
+                    tr = TableRow()
+                    table.addElement(tr)
+                    tc = TableCell(valuetype="float", value=str(t[i]))
+                    tr.addElement(tc)
+                    p = P(stylename=tablecontents,text=str(t[i]))
+                    tc.addElement(p)
+
+                    tc = TableCell(valuetype="float", value=str(v[i]))
+                    tr.addElement(tc)
+                    p = P(stylename=tablecontents,text=str(v[i]))
+                    tc.addElement(p)
+
+                doc.spreadsheet.addElement(table)
+                result=io.BytesIO()
+                doc.save(result)
+                return result.getvalue() 
             else:
                 return "mode = '%s', measurement type '%s' not supported." %(mode, self.mtype)
         return "non-supported mode %s" %mode

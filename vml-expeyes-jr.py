@@ -175,6 +175,7 @@ class ExpPage:
         chooses a higher value for self.samples if possible
         @param kw a dummy dictionary to catch the session param
         """
+        oldSamples=self.samples
         if self.samples in ExpPage.sampleArray:
             i=ExpPage.sampleArray.index(self.samples);
             if i < len(ExpPage.sampleArray)-1:

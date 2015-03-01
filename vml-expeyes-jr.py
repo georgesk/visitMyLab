@@ -279,7 +279,7 @@ class ExpPage:
             if self.mtype=='t,v':
                 doc = OpenDocumentSpreadsheet()
                 # Start the table, and describe the columns
-                table = Table(name="Expeyes-Jr measurements")
+                table = Table(name="Expeyes-Jr {0}".format(time.strftime("%Y-%m-%d %Hh%Mm%Ss")))
 
                 ## column titles
                 tr = TableRow()
@@ -306,13 +306,9 @@ class ExpPage:
                     table.addElement(tr)
                     tc = TableCell(valuetype="float", value=str(t[i]))
                     tr.addElement(tc)
-                    p = P(text=str(t[i]))
-                    tc.addElement(p)
 
                     tc = TableCell(valuetype="float", value=str(v[i]))
                     tr.addElement(tc)
-                    p = P(text=str(v[i]))
-                    tc.addElement(p)
 
                 doc.spreadsheet.addElement(table)
                 result=io.BytesIO()

@@ -278,35 +278,15 @@ class ExpPage:
             ## send the data
             if self.mtype=='t,v':
                 doc = OpenDocumentSpreadsheet()
-                # Create a style for the table content. One we can modify
-                # later in the word processor.
-                tablecontents = Style(name="Table Contents", family="paragraph")
-                tablecontents.addElement(ParagraphProperties(numberlines="false", linenumber="0"))
-                doc.styles.addElement(tablecontents)
-
-                # Create automatic styles for the column widths.
-                # We want two different widths, one in inches, the other one in metric.
-                # ODF Standard section 15.9.1
-                widthshort = Style(name="Wshort", family="table-column")
-                widthshort.addElement(TableColumnProperties(columnwidth="1.7cm"))
-                doc.automaticstyles.addElement(widthshort)
-
-                widthwide = Style(name="Wwide", family="table-column")
-                widthwide.addElement(TableColumnProperties(columnwidth="1.5in"))
-                doc.automaticstyles.addElement(widthwide)
-
                 # Start the table, and describe the columns
                 table = Table(name="Expeyes-Jr measurements")
-                table.addElement(TableColumn(numbercolumnsrepeated=4,stylename=widthshort))
-                table.addElement(TableColumn(numbercolumnsrepeated=3,stylename=widthwide))
 
-                t,v=self.measurements
                 ## column titles
                 tr = TableRow()
                 table.addElement(tr)
                 tc = TableCell()
                 tr.addElement(tc)
-                p = P(stylename=tablecontents,text='t (ms)')
+                p = P(text='t (ms)')
                 tc.addElement(p)
 
                 tc = TableCell()
@@ -316,20 +296,22 @@ class ExpPage:
                     if ExpPage.expeyes_inputs[name]== self.inp:
                         input=name
                         break
-                p = P(stylename=tablecontents,text=input+' (V)')
+                p = P(text=input+' (V)')
                 tc.addElement(p)
 
+                ## write values
+                t,v=self.measurements
                 for i in range(len(t)):
                     tr = TableRow()
                     table.addElement(tr)
                     tc = TableCell(valuetype="float", value=str(t[i]))
                     tr.addElement(tc)
-                    p = P(stylename=tablecontents,text=str(t[i]))
+                    p = P(text=str(t[i]))
                     tc.addElement(p)
 
                     tc = TableCell(valuetype="float", value=str(v[i]))
                     tr.addElement(tc)
-                    p = P(stylename=tablecontents,text=str(v[i]))
+                    p = P(text=str(v[i]))
                     tc.addElement(p)
 
                 doc.spreadsheet.addElement(table)

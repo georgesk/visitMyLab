@@ -1,7 +1,8 @@
 /* styles for Visit My Lab */
 
 body {
-    background-image: url("/img/bg.jpg");
+    /*background-image: url("/img/bg.jpg");*/
+    background: rgb(250,250,250);
 }
 
 #experiments{
@@ -10,21 +11,29 @@ body {
     min-height:300px;
     min-width:500px;
     top:20px;
-    bottom:20px;
+    bottom:0px;
     left:20px;
     right:20px;
-    border:1px solid red;
+    border: solid rgba(255,0,0,0.5);
+    border-width: 1px 1px 5px;
     border-radius:10px;
     font-size: 22pt; /* necessary to define em */
 }
 
+.ui-resizable-s {
+    background-color:lightblue;
+    bottom: 0px;
+}
+
 #disp{
     position: absolute;
-    height: 100%;
+    top: 0px;
     left: 0px;
     font-size: inherit;
     right: 8.2em;
-    bottom: 0px;
+    bottom: 20px;
+    border: 1px black solid;
+    border-radius: 10px;
 }
 #buttons{
     position: absolute;
@@ -35,27 +44,31 @@ body {
     bottom:0px;
 }
 
+.wideButton{
+    width:100%;
+}
+
 .activeButton {
     font-size: inherit;
     z-index:10;
     color:green;
+    background-color:rgb(255,255,200);
     opacity:0.75;
     height:2em;
+    border: 1px black solid;
     border-radius:30px;
     cursor: pointer;
     vertical-align:middle;
-}
-
-.wideButton{
-    width:100%;
 }
 
 .noButton {
     font-size: inherit;
     z-index:10;
     color:black;
+    background-color:rgb(255,255,200);
     opacity:0.6;
     min-height:2em;
+    border: 1px black solid;
     border-radius:30px;
     cursor: text;
     vertical-align:middle;

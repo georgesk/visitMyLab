@@ -3,6 +3,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Expeyes</title>
     <link rel="stylesheet" type="text/css" href="/js/jquery-ui/css/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" type="text/css" href="/js/jquery-ui/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css"/>
     <script type="text/javascript" src="/js/jquery/jquery.js"></script>
     <script type="text/javascript" src="/js/jquery-ui/jquery-ui.min.js"></script>
@@ -11,9 +12,21 @@
     <script type="text/javascript" src="/js/vml-routines.js"></script>
     <script type="text/javascript" src="/js/vml-scope.js"></script>
     <script type="text/javascript" src="/js/vml-content.js"></script>
+    <script type="text/javascript" src="/js/vml-main.js"></script>
   </head>
-  <body onload="scope_widget($('#experiments'));">
-    <div id="experiments">
+  <body>
+    <div id="tabs">
+      <ul>
+	<li><a href="#experiments"><span>Scope</span></a></li>
+	<li><a href="#commands"><span>Commands</span></a></li>
+	<li><a href="#blog"><span>Blog</span></a></li>
+	<li><a href="#webcam"><span>Webcam</span></a></li>
+      </ul>
+      
+      <div id="experiments" />
+      <div id="commands" />
+      <div id="blog" />
+      <div id="webcam" />
     </div>
   </body>
 </html>

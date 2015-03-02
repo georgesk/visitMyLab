@@ -105,14 +105,16 @@ function scope_widget(owner, options={}){
     });
     cro.pause.click(function(){
 	if(auto_refresh==true){
-	    auto_refresh=false;
-	    cro.pause.css('color','red');
+	    //auto_refresh=false;
+	    //cro.pause.css('color','red');
+	    pauseScope();
 	} else {
-	    auto_refresh=true;
-	    cro.pause.css('color','green');
+	    //auto_refresh=true;
+	    //cro.pause.css('color','green');
+	    playScope();
 	}
     });
-	
+
     //Save buttons
     cro.saveButtonsDiv=add({
 	what:'div',
@@ -327,3 +329,13 @@ function scope_widget(owner, options={}){
     };
     cro.scope_refresher();   //start running the scope
 };
+
+function pauseScope(){
+    auto_refresh=false;
+    cro.pause.css('color','red');
+}
+
+function playScope(){
+    auto_refresh=true;
+    cro.pause.css('color','green');
+}

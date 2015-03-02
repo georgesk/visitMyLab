@@ -3,11 +3,25 @@
 
 $(
     function(){
-	$( "#tabs" ).tabs();
+	$( "#tabs" ).tabs({activate: onTabActivate,});
 
 	createScopeWidget($( "#tabs" ), $('#experiments'));
     }
 );
+
+/**
+ * callback function to be called when tabs are changing
+ * @param event jQuery Event object
+ * @param ui jQuery Object
+ **/
+function onTabActivate(event, ui){
+    if (ui.oldPanel.attr("id")=="experiments"){
+	pauseScope();
+    }
+    if (ui.newPanel.attr("id")=="experiments"){
+	playScope();
+    }
+}
 
 /**
  * Creates the scope widget and tailors it shap to fit within a tab

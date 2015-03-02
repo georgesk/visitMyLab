@@ -167,7 +167,7 @@ class ExpPage:
             self.samples=ExpPage.sampleArray[i]
         if oldSamples != self.samples:
             self.delay=int(self.delay*(oldSamples-1)/(self.samples-1))
-        return
+        return self.croData()
         
     @cherrypy.expose
     def samplePlus(self, **kw):
@@ -187,7 +187,7 @@ class ExpPage:
             self.samples=ExpPage.sampleArray[i]
         if oldSamples != self.samples:
             self.delay=int(self.delay*(oldSamples-1)/(self.samples-1))
-        return
+        return self.croData()
 
     durationArray=[100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000,200000, 500000]
     @cherrypy.expose
@@ -217,7 +217,7 @@ class ExpPage:
         if duration !=oldDuration:
             self.delay=delay
             self.samples=samples
-        return
+        return self.croData()
     
     @cherrypy.expose
     def durationPlus(self, **kw):
@@ -238,7 +238,17 @@ class ExpPage:
         if duration !=oldDuration:
             self.delay=delay
             self.samples=samples
-        return
+        return self.croData()
+
+    def croData(self):
+        """
+        returns a dictionary with data for Javascript's callbacks, to update
+        data inside the CRO's display and buttons
+        """
+        result={}
+        result["samples"]=self.samples
+        result["duration"]=(self.samples-1)*self.delay/1000
+        return json.dumps(result)
     
     @cherrypy.expose
     def getValues(self, **kw):

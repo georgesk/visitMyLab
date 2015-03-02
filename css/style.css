@@ -7,24 +7,28 @@ body {
 #experiments{
     position:absolute;
     overflow:hidden;
-    font-size:22pt;
-    min-height:200px;
-    min-width:200px;
-    width:98%;
+    min-height:300px;
+    min-width:500px;
     top:20px;
     bottom:20px;
+    left:20px;
+    right:20px;
     border:1px solid red;
+    border-radius:10px;
+    font-size: 22pt; /* necessary to define em */
 }
 
 #disp{
     position: absolute;
     height: 100%;
     left: 0px;
+    font-size: inherit;
     right: 8.2em;
     bottom: 0px;
 }
 #buttons{
     position: absolute;
+    font-size: inherit;
     width: 8em;
     height:100%;
     right:0px;
@@ -32,13 +36,14 @@ body {
 }
 
 .activeButton {
-    font-size: 22pt;
+    font-size: inherit;
     z-index:10;
     color:green;
-    opacity:0.6;
+    opacity:0.75;
     height:2em;
     border-radius:30px;
     cursor: pointer;
+    vertical-align:middle;
 }
 
 .wideButton{
@@ -46,13 +51,14 @@ body {
 }
 
 .noButton {
-    font-size: 22pt;
+    font-size: inherit;
     z-index:10;
     color:black;
     opacity:0.6;
-    height:2em;
+    min-height:2em;
     border-radius:30px;
     cursor: text;
+    vertical-align:middle;
 }
 
 .croContainer{
@@ -62,6 +68,7 @@ body {
     width: 100%;
     height: 100%;
     border-radius:2%;
+    font-size: inherit;
 }
 
 .croGraph{

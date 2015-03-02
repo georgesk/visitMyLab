@@ -52,6 +52,17 @@ function init_graph(id){
 }
 
 /**
+ * callback function to adjust displaied values inside cro's buttons
+ * @param data an object with following attributes:
+ * - samples: integer, number of samples queries to plot the graph
+ * - duration: float, duration of the graph in ms
+ **/
+function adjustCroValues(data){
+    $("#sampleButton").html("Samples<br/>"+data.samples);
+    $("#durationButton").html("Duration<br/>"+data.duration + " ms");
+}
+
+/**
  * Main fuction to create the oscilloscope web page.
  * Creates the display, and the auxiliary buttons, then connects
  * timer events to refreshers, for displaying the measurements plot.
@@ -136,17 +147,24 @@ function scope_page(owner, options={}){
     });
 
     //sample Buttons
+    cro.sampleButtonsDiv=add({
+	what:'div',
+	owner:buttonsDiv,
+	id:'sampleButtonsDiv',
+    });
     cro.sample=add({
 	what: 'button',
-	owner: buttonsDiv,
-	txt: 'samples',
+	owner: cro.sampleButtonsDiv,
+	id: 'sampleButton',
+	txt: 'samples<br/>201',
 	classes: 'noButton',
     });
     // sample- button
     cro.sampleMinus=add({
 	what: 'button',
-	owner: buttonsDiv,
+	owner: cro.sampleButtonsDiv,
 	txt: '-',
+	id:"sampleMinus",
 	classes: 'activeButton',
 	title: 'Take less measurement samples at each scan',
     });
@@ -157,12 +175,16 @@ function scope_page(owner, options={}){
 	    url: "/sampleMinus",
 	    timeout: 5000,
 	    async: true,
+	    dataType: "json",
+	    success: function(data){
+		adjustCroValues(data);
+	    },
 	});
     });
     // sample+ button
     cro.samplePlus=add({
 	what: 'button',
-	owner: buttonsDiv,
+	owner: cro.sampleButtonsDiv,
 	txt: '+',
 	classes: 'activeButton',
 	title: 'Take more measurement samples at each scan',
@@ -174,20 +196,30 @@ function scope_page(owner, options={}){
 	    url: "/samplePlus",
 	    timeout: 5000,
 	    async: true,
+	    dataType: "json",
+	    success: function(data){
+		adjustCroValues(data);
+	    },
 	});
     });
     
     // duration buttons
+    cro.durationButtonsDiv=add({
+	what:'div',
+	owner: buttonsDiv,
+	id:"durationButtonsDiv",
+    });
     cro.duration=add({
 	what: 'button',
-	owner: buttonsDiv,
-	txt: 'duration',
+	owner: cro.durationButtonsDiv,
+	id: 'durationButton',
+	txt: 'duration<br/>40 ms',
 	classes: 'noButton',
     });
     // duration- button
     cro.durationMinus=add({
 	what: 'button',
-	owner: buttonsDiv,
+	owner: cro.durationButtonsDiv,
 	txt: '-',
 	classes: 'activeButton',
 	title: 'Decrease the duration of the scan',
@@ -199,12 +231,16 @@ function scope_page(owner, options={}){
 	    url: "/durationMinus",
 	    timeout: 5000,
 	    async: true,
+	    dataType: "json",
+	    success: function(data){
+		adjustCroValues(data);
+	    },
 	});
     });
     // duration+ button
     cro.durationPlus=add({
 	what: 'button',
-	owner: buttonsDiv,
+	owner: cro.durationButtonsDiv,
 	txt: '+',
 	classes: 'activeButton',
 	title: 'Increase the duration of the scan',
@@ -216,6 +252,11 @@ function scope_page(owner, options={}){
 	    url: "/durationPlus",
 	    timeout: 5000,
 	    async: true,
+	    dataType: "json",
+	    success: function(data){
+		console.log("GRRR", data);
+		adjustCroValues(data);
+	    },
 	});
     });
     

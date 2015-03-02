@@ -63,7 +63,7 @@ function adjustCroValues(data){
 }
 
 /**
- * Main fuction to create the oscilloscope web page.
+ * Main fuction to create the oscilloscope widget.
  * Creates the display, and the auxiliary buttons, then connects
  * timer events to refreshers, for displaying the measurements plot.
  * @param owner a jQueryfied HTML element which will contain the scope
@@ -78,7 +78,7 @@ function adjustCroValues(data){
  *  if set to some float value, its value takes precedence onto delay
  *  and delay will be set to duration/(number - 1).
  **/
-function scope_page(owner, options={}){
+function scope_widget(owner, options={}){
     opts={};
     opts.config   = options.config   || false;
     opts.input    = options.input    || false; //"A1";
@@ -263,7 +263,7 @@ function scope_page(owner, options={}){
     //--initialize graph
     cro.container = add({
 	what:'div',
-	owner:dispDiv,
+	owner: dispDiv,
 	txt:'',
 	classes:'croContainer',
     });	//make a container

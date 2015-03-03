@@ -67,4 +67,5 @@ function createCommandWidgets(container){
     container.empty()
     controlOD1(container);
     controlPVS(container);
+    controlSQR(container);
 }

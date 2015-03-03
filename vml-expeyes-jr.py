@@ -261,6 +261,29 @@ class ExpPage:
         """
         return json.dumps(self.device.set_voltage(float(kw["val"])/1000.0))
         
+    @cherrypy.expose
+    def setSQR(self, **kw):
+        """
+        sets a given square generator SQR1 or SQR2, with a given frequency
+        @param kw dictionary of parameters, featuring:
+         -val a stringified float between 0 and 20000 for the frequency
+         -sqr a stringified integer: 1 for SQR1 and 2 for SQR2
+        @return the feedback value from the generator
+        """
+        val=float(kw["val"])
+        if val==0.0:
+            if kw["sqr"]=="1":
+                self.device.set_sqr1(-1) # sets the output to zero volt
+                return json.dumps(0)
+            elif kw["sqr"]=="2":
+                self.device.set_sqr2(-1) # sets the output to zero volt
+                return json.dumps(0)
+        else:
+            if kw["sqr"]=="1":
+                return json.dumps(self.device.set_sqr1(val))
+            elif kw["sqr"]=="2":
+                return json.dumps(self.device.set_sqr2(val))
+        
     def croData(self):
         """
         returns a dictionary with data for Javascript's callbacks, to update

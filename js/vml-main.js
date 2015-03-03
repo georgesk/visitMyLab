@@ -33,14 +33,6 @@ function onTabActivate(event, ui){
     if (ui.newPanel.attr("id")=="experiments"){
 	playScope();
     }
-    // switch on and off the webcam panel
-    if (ui.oldPanel.attr("id")=="experiments"){
-	webcamActive=0;
-    }
-    if (ui.newPanel.attr("id")=="experiments"){
-	webcamActive=1;
-	webcamReActivate();
-    }
 }
 
 /**
@@ -93,6 +85,8 @@ function createWebcamPage(container){
 	src: "/webcam",
 	width: "100%",
 	height: "600px",
+	name: "webcam",
+	id:"webcam",
     }).html("Your browser does not support iframes")
     iframe.resizable({
 	handles:"s"

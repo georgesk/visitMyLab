@@ -398,14 +398,9 @@ class ExpPage:
         return """
 <img src="data:image/jpg;base64,%s">
 <script type="text/javascript">
-   if (webcamActive){
         setTimeout(function(){
         window.location.reload(1);
         }, 1000);
-   }
-   function webcamReActivate(){
-        window.location.reload(1);
-   }
 </script>
 """ % b64encode(file("/tmp/webcam.jpg").read())
         

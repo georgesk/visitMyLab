@@ -1,0 +1,11 @@
+<map id="vml&#45;expeyes&#45;jr.checkLock" name="vml&#45;expeyes&#45;jr.checkLock">
+<area shape="rect" id="node2" href="$classvml-expeyes-jr_1_1ExpPage.html#a8f2657359ab44165ae7c7fc4a7d268a3" title="a routine to get measured values as a useful file" alt="" coords="624,5,803,47"/>
+<area shape="rect" id="node9" href="$namespacevml-expeyes-jr.html#a6f95902e58d0a8357c3069af2a3cfa8f" title="Starts the web service." alt="" coords="223,38,391,65"/>
+<area shape="rect" id="node3" href="$classvml-expeyes-jr_1_1ExpPage.html#ae136807b323512450541fb3064ca3516" title="sets a given square generator SQR1 or SQR2, with a given frequency" alt="" coords="851,13,1056,39"/>
+<area shape="rect" id="node4" href="$classvml-expeyes-jr_1_1ExpPage.html#aecc83bf48828c117294807506bd0392d" title="sets the digital output OD1, with the given boolean value" alt="" coords="1104,13,1307,39"/>
+<area shape="rect" id="node5" href="$classvml-expeyes-jr_1_1ExpPage.html#a61123077db4b7f3a6eaadc038833b28e" title="increases the duration of the record when possible; modifies the values of self.samples and self..." alt="" coords="1355,13,1585,39"/>
+<area shape="rect" id="node6" href="$classvml-expeyes-jr_1_1ExpPage.html#aa66e85aee60e70aa0bc7209eabe1644e" title="reduces the duration of the record when possible; modifies the values of self.samples and self..." alt="" coords="1633,5,1840,47"/>
+<area shape="rect" id="node7" href="$classvml-expeyes-jr_1_1ExpPage.html#a57f97a1684eb203e8ee1cb7cb0937802" title="chooses a higher value for self.samples if possible" alt="" coords="1888,13,2115,39"/>
+<area shape="rect" id="node8" href="$classvml-expeyes-jr_1_1ExpPage.html#ab041f1d990e887bde6bfb4345f6d7711" title="chooses a lower value for self.samples if possible, while keeping the same total duration" alt="" coords="2163,5,2364,47"/>
+<area shape="rect" id="node10" href="$namespacevml-expeyes-jr.html#ae077b509cbac926268f450460aa0f6ae" title="Callback function which is assigned to channels &quot;stop&quot; and &quot;exit&quot;." alt="" coords="439,38,576,65"/>
+</map>

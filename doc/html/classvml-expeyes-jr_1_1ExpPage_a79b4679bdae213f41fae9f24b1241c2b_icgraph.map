@@ -1,0 +1,8 @@
+<map id="vml&#45;expeyes&#45;jr.ExpPage.croData" name="vml&#45;expeyes&#45;jr.ExpPage.croData">
+<area shape="rect" id="node2" href="$classvml-expeyes-jr_1_1ExpPage.html#ab041f1d990e887bde6bfb4345f6d7711" title="chooses a lower value for self.samples if possible, while keeping the same total duration" alt="" coords="1571,10,1772,51"/>
+<area shape="rect" id="node3" href="$classvml-expeyes-jr_1_1ExpPage.html#a57f97a1684eb203e8ee1cb7cb0937802" title="chooses a higher value for self.samples if possible" alt="" coords="1296,43,1523,69"/>
+<area shape="rect" id="node4" href="$classvml-expeyes-jr_1_1ExpPage.html#aa66e85aee60e70aa0bc7209eabe1644e" title="reduces the duration of the record when possible; modifies the values of self.samples and self..." alt="" coords="1041,94,1248,135"/>
+<area shape="rect" id="node5" href="$classvml-expeyes-jr_1_1ExpPage.html#a61123077db4b7f3a6eaadc038833b28e" title="increases the duration of the record when possible; modifies the values of self.samples and self..." alt="" coords="763,144,993,171"/>
+<area shape="rect" id="node6" href="$classvml-expeyes-jr_1_1ExpPage.html#ae136807b323512450541fb3064ca3516" title="sets a given square generator SQR1 or SQR2, with a given frequency" alt="" coords="259,195,464,221"/>
+<area shape="rect" id="node7" href="$classvml-expeyes-jr_1_1ExpPage.html#aecc83bf48828c117294807506bd0392d" title="sets the digital output OD1, with the given boolean value" alt="" coords="512,195,715,221"/>
+</map>

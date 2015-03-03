@@ -1,0 +1,6 @@
+<map id="vml&#45;expeyes&#45;jr.ExpPage.setOD1" name="vml&#45;expeyes&#45;jr.ExpPage.setOD1">
+<area shape="rect" id="node2" href="$classvml-expeyes-jr_1_1ExpPage.html#a61123077db4b7f3a6eaadc038833b28e" title="increases the duration of the record when possible; modifies the values of self.samples and self..." alt="" coords="256,13,487,39"/>
+<area shape="rect" id="node3" href="$classvml-expeyes-jr_1_1ExpPage.html#aa66e85aee60e70aa0bc7209eabe1644e" title="reduces the duration of the record when possible; modifies the values of self.samples and self..." alt="" coords="535,5,741,47"/>
+<area shape="rect" id="node4" href="$classvml-expeyes-jr_1_1ExpPage.html#a57f97a1684eb203e8ee1cb7cb0937802" title="chooses a higher value for self.samples if possible" alt="" coords="789,13,1016,39"/>
+<area shape="rect" id="node5" href="$classvml-expeyes-jr_1_1ExpPage.html#ab041f1d990e887bde6bfb4345f6d7711" title="chooses a lower value for self.samples if possible, while keeping the same total duration" alt="" coords="1064,5,1265,47"/>
+</map>

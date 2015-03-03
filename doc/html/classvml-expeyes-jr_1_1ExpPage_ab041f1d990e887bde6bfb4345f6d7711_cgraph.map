@@ -1,0 +1,13 @@
+<map id="vml&#45;expeyes&#45;jr.ExpPage.sampleMinus" name="vml&#45;expeyes&#45;jr.ExpPage.sampleMinus">
+<area shape="rect" id="node2" href="$classvml-expeyes-jr_1_1ExpPage.html#a79b4679bdae213f41fae9f24b1241c2b" title="returns a dictionary with data for Javascript&#39;s callbacks, to update data inside the CRO&#39;s display an..." alt="" coords="1567,93,1772,120"/>
+<area shape="rect" id="node3" href="$classvml-expeyes-jr_1_1ExpPage.html#a57f97a1684eb203e8ee1cb7cb0937802" title="chooses a higher value for self.samples if possible" alt="" coords="255,43,481,69"/>
+<area shape="rect" id="node4" href="$classvml-expeyes-jr_1_1ExpPage.html#aa66e85aee60e70aa0bc7209eabe1644e" title="reduces the duration of the record when possible; modifies the values of self.samples and self..." alt="" coords="529,94,736,135"/>
+<area shape="rect" id="node5" href="$classvml-expeyes-jr_1_1ExpPage.html#a61123077db4b7f3a6eaadc038833b28e" title="increases the duration of the record when possible; modifies the values of self.samples and self..." alt="" coords="784,169,1015,196"/>
+<area shape="rect" id="node6" href="$classvml-expeyes-jr_1_1ExpPage.html#aecc83bf48828c117294807506bd0392d" title="sets the digital output OD1, with the given boolean value" alt="" coords="1063,195,1265,221"/>
+<area shape="rect" id="node12" href="$classvml-expeyes-jr_1_1ExpPage.html#a6c5d48c5d51cb4ca559f8adcb2acee61" title="sets the programmable voltage source PVS, with the given value" alt="" coords="1063,245,1265,272"/>
+<area shape="rect" id="node7" href="$classvml-expeyes-jr_1_1ExpPage.html#ae136807b323512450541fb3064ca3516" title="sets a given square generator SQR1 or SQR2, with a given frequency" alt="" coords="1313,195,1519,221"/>
+<area shape="rect" id="node8" href="$classvml-expeyes-jr_1_1ExpPage.html#a8f2657359ab44165ae7c7fc4a7d268a3" title="a routine to get measured values as a useful file" alt="" coords="1580,187,1759,229"/>
+<area shape="rect" id="node9" href="$namespacevml-expeyes-jr.html#ae077b509cbac926268f450460aa0f6ae" title="Callback function which is assigned to channels &quot;stop&quot; and &quot;exit&quot;." alt="" coords="1820,169,1957,196"/>
+<area shape="rect" id="node11" href="$namespacevml-expeyes-jr.html#abae869dd028434ce78ce574da7dd85ff" title="checks that the server is launched only once." alt="" coords="2221,195,2391,221"/>
+<area shape="rect" id="node10" href="$namespacevml-expeyes-jr.html#a6f95902e58d0a8357c3069af2a3cfa8f" title="Starts the web service." alt="" coords="2005,169,2173,196"/>
+</map>

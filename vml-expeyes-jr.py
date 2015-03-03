@@ -4,11 +4,14 @@
 # VISIT MY LABORATORY
 
 from __future__ import print_function, with_statement
+from threading import Thread, Event
+from base64 import b64encode
 
 import fcntl, sys, re, time
 import cherrypy, json
 import expeyes.eyesj
 import os.path
+import cv2
 
 ## to save ODS files
 from odf.opendocument import OpenDocumentSpreadsheet
@@ -371,7 +374,42 @@ class ExpPage:
             else:
                 return "mode = '%s', measurement type '%s' not supported." %(mode, self.mtype)
         return "non-supported mode %s" %mode
-    
+
+    lastSeen =time.time()
+    @cherrypy.expose
+    def webcam(self):
+        """
+        returns a webcam snapshot upon every call
+        """
+        """
+        ========= NOT WORKING NOW SINCE cv2.imencode() is buggy
+        global currentPhoto
+        if not crrentPhoto
+            return
+        """
+        if not os.path.exists("/tmp/webcam.jpg"):
+            return
+        """
+        =========== This one delivers a downloadable file once
+        cherrypy.response.headers["Content-Type"]="image/jpeg"
+        cherrypy.response.headers['Content-Disposition'] = 'attachment; filename=photo.jpg'
+        return file("/tmp/webcam.jpg")
+        """
+        return """
+<img src="data:image/jpg;base64,%s">
+<script type="text/javascript">
+   if (webcamActive){
+        setTimeout(function(){
+        window.location.reload(1);
+        }, 1000);
+   }
+   function webcamReActivate(){
+        window.location.reload(1);
+   }
+</script>
+""" % b64encode(file("/tmp/webcam.jpg").read())
+        
+        
 		
 def stopit():
     """
@@ -400,6 +438,23 @@ def checkLock(lockFileName='expeyes-server.lock'):
         sys.exit(1)
     return True
 
+class PhotoThread(Thread):
+    def __init__(self, event):
+        Thread.__init__(self)
+        self.stopped = event
+
+    def run(self):
+        global cap
+        global currentPhoto
+        while not self.stopped.wait(1):
+            # print "GRRR Photo thread %s" % time.time()
+            # call a function
+            ret, frame = cap.read()
+            # ret, jpeg = cv2.imencode('.jpg', frame)
+            # currentPhoto=jpeg.tobytes()
+            cv2.imwrite("/tmp/webcam.jpg", frame)
+
+            
 def startServer():
     """
     Starts the web service
@@ -424,9 +479,18 @@ def startServer():
     cherrypy.engine.block()
     return
 
+
+
 if __name__=='__main__':
     checkLock() # aborts if the server is already running.
-    app=None # global variable
+    app=None          # global variable
+    currentPhoto=None # global variable to serve webcam snapshots
+    stopEvent=Event() # global variable; call its set method to stop
+    photoThread=PhotoThread(stopEvent)
+    ## initialize the camera
+    cap=None          #global variable
+    cap = cv2.VideoCapture(0)
+    photoThread.start()
     startServer()
     
 # Local Variables:

@@ -2,6 +2,9 @@
 // Following values are implemented: "tabs" (default style), ...
 var mainStyle="";
 
+// Activity of the webcam
+var webcamActive=0;
+
 // The .ready callback, which is the main javascript program
 // launched when the DOM is ready.
 
@@ -12,6 +15,7 @@ $(
 	    $( "#tabs" ).tabs({activate: onTabActivate,});
 	    createScopeWidget($('#experiments'), $("#tabs"));
 	    createCommandWidgets($('#commands'));
+	    createWebcamPage($('#webcam'));
 	}
     }
 );
@@ -22,11 +26,20 @@ $(
  * @param ui jQuery Object
  **/
 function onTabActivate(event, ui){
+    // switch on and off the scope panel
     if (ui.oldPanel.attr("id")=="experiments"){
 	pauseScope();
     }
     if (ui.newPanel.attr("id")=="experiments"){
 	playScope();
+    }
+    // switch on and off the webcam panel
+    if (ui.oldPanel.attr("id")=="experiments"){
+	webcamActive=0;
+    }
+    if (ui.newPanel.attr("id")=="experiments"){
+	webcamActive=1;
+	webcamReActivate();
     }
 }
 
@@ -51,7 +64,7 @@ function createScopeWidget(container, controlWidget){
 	    bottom: "",
 	    height: parseInt($(window).height()) - h - 120,
 	});
-	// make the scope resizeable as it is initially sized from
+	// make the scope resizable as it is initially sized from
 	// the tabs defaults.
 	container.resizable({handles:"s"});
 	// adds a title to resize handles
@@ -68,4 +81,21 @@ function createCommandWidgets(container){
     controlOD1(container);
     controlPVS(container);
     controlSQR(container);
+}
+
+/**
+ * Creates the webcam feed widget
+ * @param container a jqueryfied element
+ **/
+function createWebcamPage(container){
+    container.empty()
+    var iframe = $("<iframe>",{
+	src: "/webcam",
+	width: "100%",
+	height: "600px",
+    }).html("Your browser does not support iframes")
+    iframe.resizable({
+	handles:"s"
+    });
+    container.append(iframe);
 }

@@ -11,6 +11,7 @@ $(
 	if (mainStyle == "tabs") {
 	    $( "#tabs" ).tabs({activate: onTabActivate,});
 	    createScopeWidget($('#experiments'), $("#tabs"));
+	    createCommandWidgets($('#commands'));
 	}
     }
 );
@@ -58,3 +59,9 @@ function createScopeWidget(container, controlWidget){
     }
 }
 
+/**
+ * Creates the widget featuring commandsfor the Expeyes-Jr box
+ **/
+function createCommandWidgets(container){
+    controlOD1(container);
+}

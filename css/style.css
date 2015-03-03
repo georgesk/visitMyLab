@@ -97,22 +97,39 @@ body {
     width: 140px;
     border: 1px solid black;
     border-radius: 20px;
-    padding: 10px 30px 10px 20px;
-    margin: 0px 5px;
     background-color: rgba(255,255,200,0.25);
+    padding: 0px 10px;
+}
+
+#od1 {
+    width:100%;
+    margin:0px;
 }
 
 #sliderPvsDiv {
     display: inline-table;
-    width: 800px;
+    width: 100%;
     border: 1px solid black;
     border-radius: 20px;
-    padding: 10px 30px 10px 20px;
-    margin: 0px 5px;
+    padding: 10px 0px;
     background-color: rgba(255,255,200,0.75);
+}
+
+#pvs {
+    width:100%;
+    margin: 10px 0px;
 }
 
 #pvsFeedback {
     margin:auto;
     display: block;
+}
+
+.control {
+    width:100%;
+    border: 1px solid red;
+    border-radius: 20px;
+    background-color: rgb(240,240,255);
+    margin: 10px 0px;
+    padding: 10px;
 }

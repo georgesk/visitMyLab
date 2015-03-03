@@ -15,12 +15,13 @@ body {
     left:20px;
     right:20px;
     border: solid rgba(255,0,0,0.5);
-    border-width: 1px 1px 5px;
+    border-width: 1px 1px 5px; /* to attract attention on the South handle */
     border-radius:10px;
     font-size: 22pt; /* necessary to define em */
 }
 
 .ui-resizable-s {
+    /* to make the South handle visible and reachable */
     background-color:lightblue;
     bottom: 0px;
 }
@@ -31,7 +32,7 @@ body {
     left: 0px;
     font-size: inherit;
     right: 8.2em;
-    bottom: 20px;
+    bottom: 7px; /* to let the South handle reachable */
     border: 1px black solid;
     border-radius: 10px;
 }

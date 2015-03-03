@@ -60,8 +60,11 @@ function createScopeWidget(container, controlWidget){
 }
 
 /**
- * Creates the widget featuring commandsfor the Expeyes-Jr box
+ * Creates the widget featuring commands for the Expeyes-Jr box
+ * @param container a jqueryfied element
  **/
 function createCommandWidgets(container){
+    container.empty()
     controlOD1(container);
+    controlPVS(container);
 }

@@ -240,6 +240,27 @@ class ExpPage:
             self.samples=samples
         return self.croData()
 
+    @cherrypy.expose
+    def setOD1(self, **kw):
+        """
+        sets the digital output OD1, with the given boolean value
+        @param kw dictionary of parameters, featuring:
+         -val an integer, 0 or 1
+        @return the feedback value from OD1
+        """
+        od1=10
+        return json.dumps(self.device.set_state(od1, int(kw["val"])))
+        
+    @cherrypy.expose
+    def setPVS(self, **kw):
+        """
+        sets the programmable voltage source PVS, with the given value
+        @param kw dictionary of parameters, featuring:
+         -val a stringified integer between 0 and 5000
+        @return the feedback value from PVS
+        """
+        return json.dumps(self.device.set_voltage(float(kw["val"])/1000.0))
+        
     def croData(self):
         """
         returns a dictionary with data for Javascript's callbacks, to update
